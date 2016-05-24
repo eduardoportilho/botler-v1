@@ -5,7 +5,7 @@ var bot;
 
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
-  bot.setWebHook('https://my-web-root.com/' + bot.token);
+  bot.setWebHook('https://arminio.herokuapp.com/' + bot.token);
 }
 else {
   bot = new Bot(token, { polling: true });
