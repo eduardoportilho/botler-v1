@@ -1,0 +1,17 @@
+{
+  "name": "arminio",
+  "version": "1.0.0",
+  "description": "Your personal botler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "node-telegram-bot-api": "^0.21.1"
+  }
+}

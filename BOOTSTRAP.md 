@@ -1,0 +1,120 @@
+# Armínio
+
+Your personal botler
+
+## Functionalities
+
+### MVP 0
+
+* When asked, list the next trains leaving a predefined station
+    - 0.1: Change the predefined station
+    - 0.2: Have more than one predefined station
+    - 0.3:  Bot send a message on a predefined time with the next trains leaving a predefined station.
+
+* Deploy on heroku to speed the process
+    - NodeJS [1](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction), [2](https://devcenter.heroku.com/articles/node-best-practices)
+    - MongoDB on mongolab + Mongoose [1](https://devcenter.heroku.com/articles/nodejs-mongoose)
+
+### MVP 1
+
+* Migrate to Digital Ocean
+
+---
+
+### Use case:
+
+(Aviso matinal, na [hora] definida, para [estação] que fica a [10 minutos] de casa)
+Good morning, sir. Here are the next trains:
+- 07:18 28S
+- 07:24 28
+- 07:38 28S
+Do you want me to: 
+- Notify you 10 minutes before the next departure?
+- Come back in 15 minutes?
+- Disapear? (just ignore me)
+
+/notify
+
+Very well, sir.
+Sir, it's 07:08 and there is a train leaving in 10 minutes.
+Should I: 
+- stop notifying you?
+- keep notifying for the next 2 trians? (just ignore me)
+
+(Aviso ad hoc, para a [estação] mais próxima, que fica a [15 minutos] de distância)
+/sl
+
+Hello sir, please send me your location or type the name of the station.
+
+/location
+
+Thank you, sir. The nearest location is Stockholm Östra and these are the next departing trains:
+- 17:03 28
+- ...
+Select one and I'll notify you when it's time to leave, OR
+Should I show you more options?
+
+---
+
+##  Step by step
+1. Create a simple node app in heroku
+2. Create a dummy bot on this app using node-telegram-bot-api
+3. Explore the iteraction with telegram
+    1. Do we get a user?
+4. Make a sample call to SL API
+    1. How to store the keys?
+5. Provision a MongoDB instance
+6. Store user location?
+
+---
+
+## Tech Stack
+
+* Backend app with API and endpoints to receive callbacks from telegram
+    - Node.js becase I want to learn it
+    - Host on digital ocean
+        + How to deploy?
+            * [1](https://gun.io/blog/tutorial-deploy-node-js-server-with-example/)
+
+#### Language:
+[1](https://core.telegram.org/bots/samples)
+
+* PHP
+    - Pros:
+        + Already know (a little)
+        + Help me to learn more of the language tha I work with
+    - Con:
+        + Shitty language
+* JS + Node
+    - [1](https://www.toptal.com/nodejs/why-the-hell-would-i-use-node-js)
+* Phyton
+    - Hosting: [1](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Where-to-host-Telegram-Bots)
+        + Aws, Heroku, Digital Ocean
+
+
+#### Hosting:
+* Heroku
+    - PRO: Various languages, Familiarity
+    - CON: Server sleep, dont learn deploy
+    - [Heroku + Docker](https://devcenter.heroku.com/articles/docker)
+* Hook.io [1](https://unnikked.ga/build-telegram-bot-hook-io/)
+    - PRO: Super simple
+
+#### Database:
+* Mongo
+* RethinkDb
+
+#### Other:
+
+* webhook vs. long pooling
+
+
+### Read list:
+* [TUTORIAL: HOW TO DEPLOY NODE JS APPLICATIONS, WITH EXAMPLES](https://gun.io/blog/tutorial-deploy-node-js-server-with-example/)
+* [5 Common Server Setups For Your Web Application](https://www.digitalocean.com/community/tutorials/5-common-server-setups-for-your-web-application)
+* [Why The Hell Would I Use Node.js? A Case-by-Case Tutorial](https://www.toptal.com/nodejs/why-the-hell-would-i-use-node-js)
+* [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
+* [Object Modeling in Node.js with Mongoose](https://devcenter.heroku.com/articles/nodejs-mongoose)
+* [Getting Started on Heroku with Node.js](Getting Started on Heroku with Node.js)
+* [Telegram Bot API for NodeJS](https://github.com/yagop/node-telegram-bot-api)
+* [Build a telegram bot using node.js and heroku](http://mvalipour.github.io/node.js/2015/11/10/build-telegram-bot-nodejs-heroku/)  
