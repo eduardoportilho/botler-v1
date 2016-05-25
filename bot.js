@@ -19,13 +19,13 @@ if(process.env.NODE_ENV === 'production') {
   console.log('\n=>_<= Bot server started on pooling mode...\n');
 }
 
-
 // hello command
 bot.onText(/^\/echo (.+)$/, function (msg, match) {
   var text = match[1];
   bot.sendMessage(msg.chat.id, 'echo: ' + text);
 });
 
+// station command
 bot.onText(/^\/station (.+)$/, function (msg, match) {
   console.log('=>_<= /station request: '+ match + '\n');
   var search = match[1];
@@ -46,7 +46,7 @@ bot.onText(/^\/station (.+)$/, function (msg, match) {
   });
 });
 
-// Any kind of message
+// messages
 bot.on('message', function (msg) {
   console.log('\n=>_<= Message received: ' + JSON.stringify(msg) + '\n');
   if(msg.text.indexOf('/') === 0) {
