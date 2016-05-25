@@ -1,17 +1,15 @@
 var express = require('express');
-var bodyParser = require('body-parser');
 var packageInfo = require('./package.json');
+var bodyParser = require('body-parser');
 
 var app = express();
 app.use(bodyParser.json());
-// app.set('port', (process.env.PORT || 5000));
-app.set('port', 8080);
 
 app.get('/', function (req, res) {
   res.json({ version: packageInfo.version });
 });
 
-var server = app.listen(app.get('port'), function () {
+var server = app.listen(process.env.PORT, function () {
   var host = server.address().address;
   var port = server.address().port;
 

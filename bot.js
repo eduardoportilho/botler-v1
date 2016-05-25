@@ -1,28 +1,44 @@
 var token = '203420973:AAFdCYhHjlsautYpwFyQtbZKRr7Ecet83nM';
-var webhook = 'https://arminio.herokuapp.com/';
 
-var TelegramBot = require('node-telegram-bot-api');
+/*
+var webhook = 'https://arminio.herokuapp.com:443/';
+port: process.env.PORT,
+host: process.env.HOST
+*/
+	
+var Bot = require('node-telegram-bot-api');
+var bot;
 
+if(process.env.NODE_ENV === 'production') {
+  bot = new Bot(token);
+  bot.setWebHook('https://arminio.herokuapp.com/' + bot.token);
+}
+else {
+  bot = new Bot(token, { polling: true });
+}
 
-module.exports = function () {
-	var botOptions = {
-		webHook: {
-			port: process.env.PORT,
-	        host: process.env.HOST
-		}
-	};
-	var bot = new TelegramBot(token, botOptions);
-	bot.setWebHook(webhook);
-	bot.getMe().then(function (me) {
-		console.log('bot server started...');
-		bot.on('text', function (msg) {
-			var chatID = msg.chat.id;
-			bot.sendMessage(chatID, 'xoxox');
-		});
-	});
-};
+console.log('bot server started...');
 
+// hello command
+bot.onText(/^\/say_hello (.+)$/, function (msg, match) {
+  var name = match[1];
+  bot.sendMessage(msg.chat.id, 'Hello ' + name + '!').then(function () {
+    // reply sent!
+  });
+});
 
+// sum command
+bot.onText(/^\/sum((\s+\d+)+)$/, function (msg, match) {
+  var result = 0;
+  match[1].trim().split(/\s+/).forEach(function (i) {
+    result += (+i || 0);
+  })
+  bot.sendMessage(msg.chat.id, result).then(function () {
+    // reply sent!
+  });
+});
+
+module.exports = bot;
 
 
 
