@@ -38,6 +38,15 @@ bot.onText(/^\/sum((\s+\d+)+)$/, function (msg, match) {
   });
 });
 
+// Any kind of message
+bot.on('message', function (msg) {
+  var chatId = msg.chat.id;
+  bot.sendMessage(chatId, 
+    'Sorry ' + msg.from.first_name + 
+    ', I don\'t usertand "' + msg.text + '" yet...')
+  .then(function () {});
+});
+
 module.exports = bot;
 
 

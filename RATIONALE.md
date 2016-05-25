@@ -8,3 +8,4 @@
         - Não funcionou. Parece que o web hook não está sendo chamado.
         - Vou tentar seguir o tut ipsis litteris para confirmar que não funfa.
         - Não funfou tb. O log mostra o seguinte erro: "Free app running time quota exhausted"
+        - Criei um novo app no heroku e funfou! Yay!!! \o/
