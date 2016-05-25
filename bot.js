@@ -5,13 +5,13 @@ var webhook = 'https://arminio.herokuapp.com:443/';
 port: process.env.PORT,
 host: process.env.HOST
 */
-	
+
 var Bot = require('node-telegram-bot-api');
 var bot;
 
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
-  bot.setWebHook('https://arminio.herokuapp.com/' + bot.token);
+  bot.setWebHook('https://arm1nio.herokuapp.com/' + bot.token);
 }
 else {
   bot = new Bot(token, { polling: true });
