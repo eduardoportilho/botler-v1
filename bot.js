@@ -27,22 +27,37 @@ bot.onText(/^\/echo (.+)$/, function (msg, match) {
 
 // station command
 bot.onText(/^\/station (.+)$/, function (msg, match) {
-  console.log('=>_<= /station request: '+ match + '\n');
   var search = match[1];
+  console.log('=>_<= /station request: '+ search + '\n');
   request({
     url: 'http://api.sl.se/api2/typeahead.json',
     qs: {
       key: locationApiKey,
       searchstring: search
     }
-  }, function(err, response, body){
-    console.log('=>_<= /station response:', JSON.stringify(err), JSON.stringify(response), JSON.stringify(body), '\n');
+  },
+
+  function(err, response, body){
     if(err) {
       bot.sendMessage(msg.chat.id, 'Sorry, the API is not working');
-      console.log(err); 
+      console.log('=>_<=  API error:', err, '\n'); 
       return; 
     }
-    bot.sendMessage(msg.chat.id, 'Here is what I got: ' + JSON.stringify(body));
+
+    var response = JSON.parse(body);
+    var locations = response['ResponseData'];
+
+    // console.log('=>_<= locations:', locations, '\n',
+    //   '\ttype: ' + (typeof locations), '\n',
+    //   '\tks: ' + Object.keys(locations), '\n'
+    //   );
+
+    var locationNames = locations.map(function(location) {
+      return location["Name"];
+    });
+
+    bot.sendMessage(msg.chat.id, 'Here is what I got: ' + locationNames.join(', '));
+
   });
 });
 
@@ -55,8 +70,7 @@ bot.on('message', function (msg) {
   var chatId = msg.chat.id;
   bot.sendMessage(chatId, 
     'Sorry ' + msg.from.first_name + 
-    ', I don\'t userstand "' + msg.text + '" yet... :-(')
-  .then(function () {});
+    ', I don\'t userstand "' + msg.text + '" yet... :-(');
 });
 
 module.exports = bot;

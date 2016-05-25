@@ -10,7 +10,7 @@
         - Não funfou tb. O log mostra o seguinte erro: "Free app running time quota exhausted"
         - Criei um novo app no heroku e funfou! Yay!!! \o/
 
-* >>> Migrar chaves para variáveis
+* Migrar chaves para variáveis ✅
 
 * Fazer uma query na API SL
 
@@ -23,9 +23,13 @@ Location:
       "Y": "59469630"
     }
 
-
-
+* Organizar projeto
+    - https://devcenter.heroku.com/articles/node-best-practices
 * Subir um BD
 * Resolver scheduling
 * Customizar teclado
 * Support emojis
+
+...
+
+* Google calendar: https://developers.google.com/google-apps/calendar/quickstart/nodejs
