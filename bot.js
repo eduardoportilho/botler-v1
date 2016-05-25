@@ -1,5 +1,5 @@
 var token = '203420973:AAFdCYhHjlsautYpwFyQtbZKRr7Ecet83nM';
-var webhook = 'https://arminio.herokuapp.com:443/';
+var webhook = 'https://arminio.herokuapp.com/';
 
 var TelegramBot = require('node-telegram-bot-api');
 
