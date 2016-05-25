@@ -13,11 +13,12 @@ var server = app.listen(process.env.PORT, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Web server started at http://%s:%s', host, port);
+  console.log('=>_<= Web server started at http://%s:%s\n', host, port);
 });
 
 module.exports = function (bot) {
   app.post('/' + bot.token, function (req, res) {
+  	console.log('=>_<= Webhook hit: ' + JSON.stringify(req.body) + '\n');
     bot.processUpdate(req.body);
     res.sendStatus(200);
   });

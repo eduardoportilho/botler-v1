@@ -2,30 +2,32 @@ var telegramToken = process.env['telegram_token'],
   locationApiKey = process.env['sl_location_api_key'],
   realtimeApiKey = process.env['sl_realtime3_api_key'];
 
-var host = 'https://arm1nio.herokuapp.com/';
+var host = 'https://arm1nio.herokuapp.com/',
+  webhook = host + telegramToken;
+
 var Bot = require('node-telegram-bot-api');
 var request = require('request');
 
 var bot;
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(telegramToken);
-  bot.setWebHook(host + bot.telegramToken);
+  bot.setWebHook(webhook);
+  console.log('\n'+
+    '=>_<= Bot server started with webhook: ' + webhook + '\n');
 } else {
   bot = new Bot(telegramToken, { polling: true });
+  console.log('\n=>_<= Bot server started on pooling mode...\n');
 }
 
-console.log('bot server started...');
 
 // hello command
-bot.onText(/^\/say_hello (.+)$/, function (msg, match) {
-  var name = match[1];
-  bot.sendMessage(msg.chat.id, 'Hello ' + name + '!').then(function () {
-    // reply sent!
-  });
+bot.onText(/^\/echo (.+)$/, function (msg, match) {
+  var text = match[1];
+  bot.sendMessage(msg.chat.id, 'echo: ' + text);
 });
 
-// key=992cf8d86fe749efa3f51a2ad7ca5db0&searchstring=tunagård
 bot.onText(/^\/station (.+)$/, function (msg, match) {
+  console.log('=>_<= /station request: '+ match + '\n');
   var search = match[1];
   request({
     url: 'http://api.sl.se/api2/typeahead.json',
@@ -34,21 +36,22 @@ bot.onText(/^\/station (.+)$/, function (msg, match) {
       searchstring: search
     }
   }, function(err, response, body){
+    console.log('=>_<= /station response:', JSON.stringify(err), JSON.stringify(response), JSON.stringify(body), '\n');
     if(err) {
       bot.sendMessage(msg.chat.id, 'Sorry, the API is not working');
       console.log(err); 
       return; 
     }
-    bot.sendMessage(msg.chat.id, 'Here is what I got: ' + body);
-  });
-
-  bot.sendMessage(msg.chat.id, 'Hello ' + name + '!').then(function () {
-    // reply sent!
+    bot.sendMessage(msg.chat.id, 'Here is what I got: ' + JSON.stringify(body));
   });
 });
 
 // Any kind of message
 bot.on('message', function (msg) {
+  console.log('\n=>_<= Message received: ' + JSON.stringify(msg) + '\n');
+  if(msg.text.indexOf('/') === 0) {
+    return; //ignore commands
+  };
   var chatId = msg.chat.id;
   bot.sendMessage(chatId, 
     'Sorry ' + msg.from.first_name + 
