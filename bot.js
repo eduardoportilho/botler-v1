@@ -9,6 +9,7 @@ var Bot = require('node-telegram-bot-api');
 var request = require('request');
 
 var bot;
+
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(telegramToken);
   bot.setWebHook(webhook);
@@ -37,7 +38,7 @@ bot.onText(/^\/station (.+)$/, function (msg, match) {
     }
   },
 
-  function(err, response, body){
+  function(err, response, body) {
     if(err) {
       bot.sendMessage(msg.chat.id, 'Sorry, the API is not working');
       console.log('=>_<=  API error:', err, '\n'); 

@@ -7,12 +7,17 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "node-telegram-bot-api": "^0.21.1",
+    "promise": "^7.1.1",
     "request": "^2.72.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require test/helpers/test_setup.js --reporter spec"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "sinon": "^1.17.4"
+  }
 }
