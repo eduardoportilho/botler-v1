@@ -23,6 +23,19 @@ Your personal botler
 
 ### Use case:
 
+me: /next-departure
+ar: Sure, send me your location or type the name of the station
+    - Ask for location
+
+ar: Great! choose a station [present close stations on a keyboard]
+    - Call 
+me: [choose station]
+ar: Coolio! Here are the next departures, choose one: [present next departures on a keyboard]
+me: [choose departure]
+ar: notify 20m and 10m
+
+### Use case:
+
 (Aviso matinal, na [hora] definida, para [estação] que fica a [10 minutos] de casa)
 Good morning, sir. Here are the next trains:
 - 07:18 28S

@@ -28,6 +28,10 @@ function ArminioBot() {
         self.station.call(self, msg, match);
     });
 
+    self.bot.onText(/^\/go$/, function(msg, match) {
+        self.go.call(self, msg, match);
+    });
+
     self.bot.on('message', function(msg) {
         self.handleMessage.call(self, msg);
     });
@@ -38,6 +42,22 @@ function ArminioBot() {
 ArminioBot.prototype.echo = function(msg, match) {
     var text = match[1];
     this.bot.sendMessage(msg.chat.id, 'echo: ' + text);
+}
+
+ArminioBot.prototype.go = function(msg, match) {
+    logger.debug('Go command received.');
+    this.bot.sendMessage(msg.chat.id, 'Sure, could you please send me your current location?', {
+        reply_markup: {
+            resize_keyboard: true,
+            one_time_keyboard: true,
+            keyboard: [
+                [{
+                    text: 'Send my current location',
+                    request_location: true
+                }]
+            ]
+        }
+    });
 }
 
 ArminioBot.prototype.station = function(msg, match) {
@@ -58,14 +78,20 @@ ArminioBot.prototype.station = function(msg, match) {
 };
 
 ArminioBot.prototype.handleMessage = function(msg) {
-    if(msg.text.indexOf('/') === 0) {
+    if(msg.text && msg.text.indexOf('/') === 0) {
         return; //ignore commands
     };
     logger.debug('Message received: ' + JSON.stringify(msg));
     var chatId = msg.chat.id;
-    this.bot.sendMessage(chatId, 
-        'Sorry ' + msg.from.first_name + 
-        ', I don\'t userstand "' + msg.text + '" yet... :-(');
+
+    var reply;
+    if(msg.location) {
+        reply = "Got your location: " + JSON.stringify(msg.location);
+    } else {
+        reply = 'Sorry ' + msg.from.first_name + 
+            ', I don\'t userstand "' + msg.text + '" yet... :-(';
+    }
+    this.bot.sendMessage(chatId, reply, {reply_markup: { hide_keyboard: true }});
 };
 
 ArminioBot.prototype.processUpdate = function(body) {

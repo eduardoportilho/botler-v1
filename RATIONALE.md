@@ -24,7 +24,15 @@
 * Organizar projeto ✅
     - https://devcenter.heroku.com/articles/node-best-practices
 
-...=>_<=...=>_<=_...=>_<=...=>_<=_...=>_<=...=>_<=_
+...=>_<=...=>_<=_...=>_<=...=>_<=_...=>_<=...=>_<=...=>_<=...=>_<=...=>_<=...
+
+* Implementar um MVP
+  - Consultar as próximas saidas de uma estação próxima
+    + Pedir ao usuário sua localização ✅
+      * Custom keyboard 🛠
+    + 
+
+...=>_<=...=>_<=_...=>_<=...=>_<=_...=>_<=...=>_<=...=>_<=...=>_<=...=>_<=...
 
 * Subir um BD
 * Resolver scheduling
