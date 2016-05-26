@@ -1,2 +1,3 @@
 var bot = require('./bot');
-require('./web')(bot);
+var web = require('./web');
+web.init(bot);

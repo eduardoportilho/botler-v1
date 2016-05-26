@@ -1,25 +1,32 @@
-var express = require('express');
-var packageInfo = require('../package.json');
-var bodyParser = require('body-parser');
+var express 	= require('express'),
+	bodyParser 	= require('body-parser'),
+	packageInfo = require('../package.json'),
+	logger 		= require('./logger');
 
-var app = express();
-app.use(bodyParser.json());
+function Web() {}
 
-app.get('/', function (req, res) {
-  res.json({ version: packageInfo.version });
-});
+Web.prototype.init = function(bot) {
+	this.app = express();
+	this.app.use(bodyParser.json());
 
-var server = app.listen(process.env.PORT, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+	this.app.get('/', function (req, res) {
+		res.json({ version: packageInfo.version });
+	});
 
-  console.log('=>_<= Web server started at http://%s:%s\n', host, port);
-});
 
-module.exports = function (bot) {
-  app.post('/' + bot.token, function (req, res) {
-  	console.log('=>_<= Webhook hit: ' + JSON.stringify(req.body) + '\n');
-    bot.processUpdate(req.body);
-    res.sendStatus(200);
-  });
-};
+	var webhookPath = '/' + bot.telegramToken;
+  	this.app.post(webhookPath, function (req, res) {
+		logger.debug('Webhook hit: ' + JSON.stringify(req.body));
+		bot.processUpdate.call(bot, req.body);
+		res.sendStatus(200);
+	});
+
+	var server = this.app.listen(process.env.PORT, function () {
+		var host = server.address().address;
+		var port = server.address().port;
+		logger.debug('Web server started at http://' + host +':' + port);
+		logger.debug('Webhook up on: '+ webhookPath);
+	});
+}
+
+module.exports = new Web();

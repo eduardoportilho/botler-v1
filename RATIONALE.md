@@ -1,7 +1,7 @@
 
 
 
-* Subir um bot hello world
+* Subir um bot hello world ✅
     * Tentei seguir [esse tutorial](http://mvalipour.github.io/node.js/2015/11/10/build-telegram-bot-nodejs-heroku/)
         - Funcionou na maquina local com pooling
     * Para deployar no heroku, segui [esse tutorial](http://mvalipour.github.io/node.js/2015/12/06/telegram-bot-webhook-existing-express/)
@@ -14,16 +14,14 @@
 
 * Fazer uma query na API SL ✅
 
-Location:
-    {
-      "Name": "Tunagård (Österåker)",
-      "SiteId": "9661",
-      "Type": "Station",
-      "X": "18307287",
-      "Y": "59469630"
-    }
+    Location: {
+          "Name": "Tunagård (Österåker)",
+          "SiteId": "9661",
+          "Type": "Station",
+          "X": "18307287",
+          "Y": "59469630" }
 
-* Organizar projeto
+* Organizar projeto ✅
     - https://devcenter.heroku.com/articles/node-best-practices
 
 ...=>_<=...=>_<=_...=>_<=...=>_<=_...=>_<=...=>_<=_
