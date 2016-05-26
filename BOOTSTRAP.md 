@@ -26,6 +26,7 @@ Your personal botler
 me: /next-departure
 ar: Sure, send me your location or type the name of the station
     - Ask for location
+    - Search nearby stations
 
 ar: Great! choose a station [present close stations on a keyboard]
     - Call 

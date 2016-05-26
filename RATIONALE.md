@@ -28,9 +28,9 @@
 
 * Implementar um MVP
   - Consultar as próximas saidas de uma estação próxima
-    + Pedir ao usuário sua localização ✅
-      * Custom keyboard 🛠
-    + 
+    + Pedir ao usuário sua localização
+      * Custom keyboard  ✅
+    + Buscar estaçoes próximas 🛠
 
 ...=>_<=...=>_<=_...=>_<=...=>_<=_...=>_<=...=>_<=...=>_<=...=>_<=...=>_<=...
 

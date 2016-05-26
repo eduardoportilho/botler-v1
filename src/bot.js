@@ -1,8 +1,9 @@
-var TelegramBot     = require('node-telegram-bot-api'),
-    request         = require('request'),
-    locationService = require('./location_service'),
-    env             = require('./env_config'),
-    logger          = require('./logger');
+var TelegramBot         = require('node-telegram-bot-api'),
+    request             = require('request'),
+    locationService     = require('./location_service'),
+    nearbyStopsService  = require('./nearby_stops_service'),
+    env                 = require('./env_config'),
+    logger              = require('./logger');
 
 function ArminioBot() {
     var self = (this instanceof ArminioBot) ? this : Object.create(ArminioBot.prototype);
@@ -33,7 +34,11 @@ function ArminioBot() {
     });
 
     self.bot.on('message', function(msg) {
-        self.handleMessage.call(self, msg);
+        if(msg.location) {
+            self.handleLocation.call(self, msg);
+        } else {
+            self.handleMessage.call(self, msg);
+        }
     });
 
     return self;
@@ -45,7 +50,6 @@ ArminioBot.prototype.echo = function(msg, match) {
 }
 
 ArminioBot.prototype.go = function(msg, match) {
-    logger.debug('Go command received.');
     this.bot.sendMessage(msg.chat.id, 'Sure, could you please send me your current location?', {
         reply_markup: {
             resize_keyboard: true,
@@ -61,21 +65,46 @@ ArminioBot.prototype.go = function(msg, match) {
 }
 
 ArminioBot.prototype.station = function(msg, match) {
-    var self = this;
-    var search = match[1];
+    var self = this,
+        search = match[1];
     logger.debug('/station request: '+ search);
     locationService.getLocation(search)
-        .then(function(locations) {           
+        .then(function(locations) {
             var locationNames = locations.map(function(location) {
                 return location["Name"];
             });
             self.bot.sendMessage(msg.chat.id, 
                 'Here is what I got: ' + locationNames.join(', '));
         }, function(err) {
+            logger.debug('Location API error: ' + err);
             self.bot.sendMessage(msg.chat.id, 'Sorry, the API is not working');
-            logger.debug('Location API error: ' + err); 
         });
 };
+
+ArminioBot.prototype.handleLocation = function(msg) {
+    var self = this,
+        chatId = msg.chat.id,
+        lat = msg.location.latitude,
+        long = msg.location.longitude;
+
+    nearbyStopsService.getNearbyStops(lat, long, 5)
+        .then(function(stops) {
+            var buttonRows = stops.map(function(stop) {
+                return [{ text: stop["name"] }];
+            });
+            self.bot.sendMessage(msg.chat.id, 'Thanks! Now please choose the desired station', {
+                reply_markup: {
+                    resize_keyboard: true,
+                    one_time_keyboard: true,
+                    keyboard: buttonRows
+                }
+            });
+        }, function(err) {
+            logger.debug('Location API error: ' + err);
+            self.bot.sendMessage(msg.chat.id, 'Sorry, the API is not working');
+        });   
+
+}
 
 ArminioBot.prototype.handleMessage = function(msg) {
     if(msg.text && msg.text.indexOf('/') === 0) {
@@ -83,14 +112,9 @@ ArminioBot.prototype.handleMessage = function(msg) {
     };
     logger.debug('Message received: ' + JSON.stringify(msg));
     var chatId = msg.chat.id;
-
-    var reply;
-    if(msg.location) {
-        reply = "Got your location: " + JSON.stringify(msg.location);
-    } else {
-        reply = 'Sorry ' + msg.from.first_name + 
+    var reply = 'Sorry ' + msg.from.first_name + 
             ', I don\'t userstand "' + msg.text + '" yet... :-(';
-    }
+    
     this.bot.sendMessage(chatId, reply, {reply_markup: { hide_keyboard: true }});
 };
 
