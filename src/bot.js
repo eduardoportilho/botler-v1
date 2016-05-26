@@ -2,6 +2,7 @@ var TelegramBot         = require('node-telegram-bot-api'),
     request             = require('request'),
     locationService     = require('./location_service'),
     nearbyStopsService  = require('./nearby_stops_service'),
+    userStateService    = require('./user_state_service'),
     env                 = require('./env_config'),
     logger              = require('./logger');
 
@@ -34,6 +35,8 @@ function ArminioBot() {
     });
 
     self.bot.on('message', function(msg) {
+        var action = userStateService.getNextBotAction(msg);
+
         if(msg.location) {
             self.handleLocation.call(self, msg);
         } else {
