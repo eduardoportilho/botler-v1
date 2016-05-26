@@ -30,7 +30,6 @@ NearbyStopsServices.prototype.getNearbyStops = function(lat, long, maxResults) {
 	  				reject(err);
 	  			}
 			    var bodyObj = JSON.parse(body);
-    			logger.debug('getNearbyStops: ' + JSON.stringify(bodyObj));
 	  			/*
 	  			body: {
 					"LocationList":{

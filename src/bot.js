@@ -87,18 +87,15 @@ ArminioBot.prototype.handleLocation = function(msg) {
         lat = msg.location.latitude,
         long = msg.location.longitude;
 
-    nearbyStopsService.getNearbyStops(lat, long, 5)
+    nearbyStopsService.getNearbyStops(lat, long, 10)
         .then(function(stops) {
-            var buttonRows = stops.map(function(stop) {
-                return [{ text: stop["name"] }];
+            var stopsMessage = stops.map(function(stop) {
+                return "/" + stop["idx"] + ' ' + stop["name"];
             });
-            self.bot.sendMessage(msg.chat.id, 'Thanks! Now please choose the desired station', {
-                reply_markup: {
-                    resize_keyboard: true,
-                    one_time_keyboard: true,
-                    keyboard: buttonRows
-                }
-            });
+            self.bot.sendMessage(msg.chat.id, 
+                'Thanks! Now please choose the desired station:\n' +
+                stopsMessage.join('\n')
+            );
         }, function(err) {
             logger.debug('Location API error: ' + err);
             self.bot.sendMessage(msg.chat.id, 'Sorry, the API is not working');
