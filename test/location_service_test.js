@@ -1,7 +1,11 @@
 var request			= require('request'),
-	locationService = require('../location_service')('test-key');
+	locationService = require('../src/location_service');
 
 describe("Location Service", function() {
+	it("should use dev config", function() {
+		expect(locationService.apiKey).to.equal('locationApiKey');
+		expect(locationService.apiEndPoint).to.equal('locationEndPoint');
+    });
 
 	describe("(on success)", function() {
 		before(function(){

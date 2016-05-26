@@ -1,22 +1,25 @@
 var request = require('request'),
-	Promise = require('promise');
+	Promise = require('promise'),
+	env 	= require('./env_config'),
+	logger 	= require('./logger');
 
-function LocationService(apiKey) {
-	this.apiKey = apiKey;
-	this.apiEndPoint = 'http://api.sl.se/api2/typeahead.json';
+function LocationService() {
+	this.apiKey = env.location.apiKey;
+	this.apiEndPoint = env.location.endPoint;
     return this;
 };
 
 LocationService.prototype.getLocation = function(searchstring) {
+	var requestOptions = {
+		url: this.apiEndPoint,
+		qs: {
+			key: this.apiKey,
+			searchstring: searchstring
+		}
+	};
+
 	return new Promise(function (fulfill, reject) {
-		request.get(
-			{
-		    	url: this.apiEndPoint,
-		    	qs: {
-		      		key: this.apiKey,
-		      		searchstring: searchstring
-		    	}
-	  		},
+		request(requestOptions,
 	  		function(err, response, body) {
 	  			if (err)  {
 	  				reject(err);
@@ -30,6 +33,4 @@ LocationService.prototype.getLocation = function(searchstring) {
   	});
 };
 
-module.exports = function (apiKey) {
-	return new LocationService(apiKey);
-};
+module.exports = new LocationService();

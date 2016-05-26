@@ -12,7 +12,7 @@
 
 * Migrar chaves para variáveis ✅
 
-* Fazer uma query na API SL
+* Fazer uma query na API SL ✅
 
 Location:
     {
@@ -25,6 +25,9 @@ Location:
 
 * Organizar projeto
     - https://devcenter.heroku.com/articles/node-best-practices
+
+...=>_<=...=>_<=_...=>_<=...=>_<=_...=>_<=...=>_<=_
+
 * Subir um BD
 * Resolver scheduling
 * Customizar teclado
