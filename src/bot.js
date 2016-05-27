@@ -35,7 +35,7 @@ function ArminioBot() {
     });
 
     self.bot.on('message', function(msg) {
-        var action = userStateService.getNextBotAction(msg);
+        var action = userStateService.getNextBotActionAndUpdateState(msg);
 
         if(msg.location) {
             self.handleLocation.call(self, msg);

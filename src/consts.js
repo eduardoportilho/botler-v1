@@ -1,6 +1,8 @@
 module.exports = {
 	userState: {
-		none: 'none'
+		none: 'none',
+		goCollectLocation: 'goCollectLocation',
+		goCollectStop: 'goCollectStop'
 	},
 	userAction: {
 		goCmd: 'goCmd',
@@ -9,7 +11,10 @@ module.exports = {
 		text: 'text'
 	},
 	botAction: {
-		getLocation: 'getLocation'
+		askLocation: 'askLocation',
+		listStops: 'listStops',
+		listDepartures: 'listDepartures',
+		msgDidntUnderstand: 'msgDidntUnderstand'
 	}
 };
 	
