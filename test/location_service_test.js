@@ -1,21 +1,27 @@
-var request			= require('request'),
-	locationService = require('../src/location_service');
+var proxyquire 	=  require('proxyquire'),
+	locationService;
 
 describe("Location Service", function() {
 	it("should use dev config", function() {
-		expect(locationService.apiKey).to.equal('locationApiKey');
-		expect(locationService.apiEndPoint).to.equal('locationEndPoint');
+		var service = require('../src/location_service');
+		expect(service.apiKey).to.equal('locationApiKey');
+		expect(service.apiEndPoint).to.equal('locationEndPoint');
     });
 
 	describe("(on success)", function() {
+		
 		before(function(){
-			sinon.stub(request, 'get')
+			var requestStub = sinon.stub()
 				.yields(null, null, JSON.stringify({
 					ResponseData: ['a', 'b', 'c']
 				}));
+			locationService = proxyquire('../src/location_service', { 
+				'request': requestStub 
+			});
 		});
+
 		after(function(){
-			request.get.restore();
+			locationService = undefined;
 		});
 
 		it("getLocation should return response data", function() {
@@ -31,11 +37,16 @@ describe("Location Service", function() {
 
 	describe("(on error)", function() {
 		before(function(){
-			sinon.stub(request, 'get')
+			var requestStub = sinon.stub()
 				.yields('test error', null, null);
+
+			locationService = proxyquire('../src/location_service', { 
+				'request': requestStub 
+			});
 		});
+
 		after(function(){
-			request.get.restore();
+			locationService = undefined;
 		});
 
 		it("getLocation should return the same error", function() {
