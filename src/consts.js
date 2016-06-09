@@ -11,9 +11,9 @@ module.exports = {
 		text: 'text'
 	},
 	botAction: {
-		askLocation: 'askLocation',
-		listStops: 'listStops',
-		listDepartures: 'listDepartures',
+		askLocation: 		'askLocation',
+		listStops: 			'listStops',
+		listDepartures: 	'listDepartures',
 		msgDidntUnderstand: 'msgDidntUnderstand'
 	}
 };
