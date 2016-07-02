@@ -1,8 +1,8 @@
 var TelegramBot         = require('node-telegram-bot-api'),
     request             = require('request'),
-    locationService     = require('./location_service'),
+    //locationService     = require('./location_service'),
+    //userStateService    = require('./user_state_service'),
     nearbyStopsService  = require('./nearby_stops_service'),
-    userStateService    = require('./user_state_service'),
     env                 = require('./env_config'),
     logger              = require('./logger');
 
@@ -35,18 +35,37 @@ function ArminioBot() {
     // });
 
     self.bot.on('message', function(msg) {
+        userService.loadUserState(msg)
+            .then(function(userState) {
+                //executa ação...
+
+                // se for um comando, inicia uma nova interação
+                // se não, resgata a iteração corrente
+                // se não houver, não entendi
+                var iteraction = self.getCurrentIteraction(msg, userState);
+
+                iteraction.run(msg, userState);
+                // var actionId = getNextAction(msg, userState);
+                // switch(actionId) {
+                //     case '':
+                // }
+
+            });
+
+        //old code
+        /*
         var action = userStateService.getNextBotActionAndUpdateState(msg);
         if(typeof self[action] !== "funcion") {
 
         }
         self[action].call(self, msg);
+        */
 /*
 askLocation
 listStops
 listDepartures
 msgDidntUnderstand
 */
-
 
         // if(msg.location) {
         //     self.handleLocation.call(self, msg);
@@ -57,6 +76,36 @@ msgDidntUnderstand
 
     return self;
 };
+
+ArminioBot.prototype.getCurrentIteraction = function(msg, userState) {
+    var iteractionId;
+    if(msg.text.indexOf('/') === 0) {
+        iteractionId = msg.text;
+    } else {
+        iteractionId = userState.getCurrentIteractionId()
+    }
+    if(!iteractionId) {
+        iteractionId = '/unknown';
+    }
+
+    if(msg.text.indexOf('/save') === 0) {
+        return require('./iteractions/save_location');
+    } else if(msg.text === '/go') {
+        return require('./iteractions/list_departures');
+    } else if(msg.text === '/unknown') {
+        return require('./iteractions/unknown');
+    }
+};
+
+
+
+
+
+
+
+
+
+//old...
 
 ArminioBot.prototype.msgDidntUnderstand = function(msg) {
     var chatId = msg.chat.id;

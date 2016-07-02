@@ -5,7 +5,6 @@ var db 		= require('./db_service'),
 	Bot action: instruction to be performed by the bot
 	State: (id) state of the user after the last action
 
-
 	* Commands:
 		- /go -> askUserLocation
 			- /location -> listNearbyStops

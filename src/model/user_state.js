@@ -1,0 +1,9 @@
+class UserState {
+	hasSavedStations() {
+
+	}
+	
+	getSavedStations() {
+		
+	}
+}

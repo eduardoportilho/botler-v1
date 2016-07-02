@@ -1,5 +1,18 @@
 
 
+MVP 0.2
+
+1. Salvar localização
+me: /save Tunagard
+ar: You mean "Tunagard"? Save / Cancel
+
+2. Buscar saidas
+me: /go
+ar: Select station: (Tunagård) (Stockholm Ostra)
+me: (Tunagård)
+ar: Next departures: (10:00) (10:15) ... 
+
+...=>_<=...=>_<=_...=>_<=...=>_<=_...=>_<=...=>_<=...=>_<=...=>_<=...=>_<=...
 
 * Subir um bot hello world ✅
     * Tentei seguir [esse tutorial](http://mvalipour.github.io/node.js/2015/11/10/build-telegram-bot-nodejs-heroku/)

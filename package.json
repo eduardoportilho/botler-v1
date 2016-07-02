@@ -6,12 +6,13 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "firebase": "^3.0.4",
     "node-telegram-bot-api": "^0.21.1",
     "promise": "^7.1.1",
     "request": "^2.72.0"
   },
   "scripts": {
-    "test": "mocha --require test/helpers/test_setup.js --reporter spec"
+    "test": "mocha --recursive --require test/helpers/test_setup.js --reporter spec"
   },
   "keywords": [],
   "author": "",

@@ -1,1 +1,4 @@
 node_modules
+private
+*.sublime-project
+*.sublime-workspace
