@@ -13,14 +13,20 @@ Glossary:
 * Other files:
     - env_config: Keep track of the app variables dependent on the environment.
 
-
 FAQ:
 
 * Como testar API SL?
-    * $ node -r ./private/local_prod.js
-    * > let sl = require('./src/services/sl_service');
-    * > sl.findStations('tunag').then(stations => console.log(stations));
+    - $ node -r ./private/local_prod.js
+    - > let sl = require('./src/services/sl_service');
+    - > sl.findStations('tunag').then(stations => console.log(stations));
+
+* Como testar Firebase?
+    - $ node -r ./private/local_prod.js
+    - > let fb = require('./src/services/firebase_service');
+    - > fb.saveUserState({id:1, name: 'edu', sex: 'M'})
+    - > fb.getUserState(1).then(user => console.log(user))
+
+* Como testar o bot?
+    - node -r ./private/local_bot.js
 
 Next steps:
-
-* Implementar DbService e escrever como testar
